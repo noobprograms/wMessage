@@ -21,7 +21,12 @@ class ChatInfoTile extends StatelessWidget {
         if (snapshot.hasData) {
           var message = data?.first.data() as Map<String, dynamic>;
           if (message.isNotEmpty) {
-            lastMessage = message?['message'];
+            if (message?['type'] == 'location')
+              lastMessage = "Location";
+            else if (message?['type'] == 'image')
+              lastMessage = "Image";
+            else
+              lastMessage = message?['message'];
           }
           return Padding(
             padding: const EdgeInsets.only(left: 10.0, right: 10.0),

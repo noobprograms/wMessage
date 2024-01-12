@@ -23,22 +23,16 @@ class SplashScreen extends StatelessWidget {
       child: Scaffold(
         body: Container(
           height: mediaQueryData.size.height,
-          width: double.maxFinite,
-          padding: EdgeInsets.symmetric(
-            horizontal: 44.h,
-            vertical: 300.v,
-          ),
-          child: Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              CustomImageView(
-                imagePath: ImageConstant.logo,
-                height: mediaQueryData.size.height * 0.8,
-                width: mediaQueryData.size.width * 0.7,
-                alignment: Alignment.topCenter,
+          width: mediaQueryData.size.width,
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SizedBox(
+              height: mediaQueryData.size.height * 0.4,
+              width: mediaQueryData.size.width * 0.6,
+              child: Image.asset(
+                ImageConstant.logo,
               ),
-            ],
-          ),
+            ),
+          ]),
         ),
       ),
     );

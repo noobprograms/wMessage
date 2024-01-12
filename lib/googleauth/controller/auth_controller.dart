@@ -5,7 +5,10 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:nial_deliveries/core/models/user_model.dart' as usermodel;
 import 'package:nial_deliveries/core/utils/auth_constants.dart';
+import 'package:nial_deliveries/core/utils/zego_appId.dart';
 import 'package:nial_deliveries/routes/app_routes.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
@@ -35,8 +38,8 @@ class AuthController extends GetxController {
   _setInitialScreen(User? user) async {
     if (user == null) {
       // if the user is not found then the user is navigated to the Register Screen
-      // if (Get.currentRoute != '/login_screen')
-      Get.offNamed(AppRoutes.signUpScreen);
+      if (Get.currentRoute != '/login_screen')
+        Get.offNamed(AppRoutes.signUpScreen);
     } else {
       // if the user exists and logged in the the user is navigated to the Home Screen
       // await firebaseFirestore.collection('users').doc(user.uid).get().then((value) => value.data());
@@ -91,6 +94,14 @@ class AuthController extends GetxController {
             .doc(googleSignInAccount.id)
             .set(userToStore.toJson());
       }
+      ZegoUIKitPrebuiltCallInvitationService().init(
+        appID: zegoAppID /*input your AppID*/,
+        appSign: zegoAppSignIn /*input your AppSign*/,
+        userID: result.data()!['uid'].substring(0, 4),
+        userName: result.data()!['name'],
+        plugins: [ZegoUIKitSignalingPlugin()],
+      );
+
       Get.offAllNamed(AppRoutes.chatsScreen,
           arguments: {'currentUser': userToStore});
     }
@@ -211,6 +222,7 @@ class AuthController extends GetxController {
   }
 
   void signOut() async {
+    ZegoUIKitPrebuiltCallInvitationService().uninit();
     await auth.signOut();
   }
 

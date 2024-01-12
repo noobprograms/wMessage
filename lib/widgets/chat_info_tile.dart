@@ -17,7 +17,7 @@ class ChatInfoTile extends StatelessWidget {
         final data = snapshot.data?.docs;
         if (snapshot.hasError) return Text('Error${snapshot.error}');
         if (snapshot.connectionState == ConnectionState.waiting)
-          return Text('Loading...');
+          return Container();
         if (snapshot.hasData) {
           var message = data?.first.data() as Map<String, dynamic>;
           if (message.isNotEmpty) {

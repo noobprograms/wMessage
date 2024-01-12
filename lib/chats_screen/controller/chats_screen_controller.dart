@@ -18,10 +18,12 @@ class ChatsController extends GetxController {
   RxList allUsers = [].obs;
   RxList searchResults = [].obs;
   RxBool isLoaded = false.obs;
-  void onInit() {
+  RxBool noChats = true.obs;
+  var newToken;
+  void onInit() async {
     super.onInit();
-    getAllUsers();
-    searchResults.value = allUsers;
+    await getAllUsers();
+    // searchResults.value = allUsers;
   }
 
   void onClose() {
@@ -36,7 +38,7 @@ class ChatsController extends GetxController {
         await get(Uri.parse('$baseUrl/nail_call/publisher/userAccount/0/'));
     var extractedToken = jsonDecode(result.body)['rtcToken'];
 
-    Get.toNamed(AppRoutes.chatRoomScreen, arguments: {
+    Get.offAllNamed(AppRoutes.chatRoomScreen, arguments: {
       'cUser': currentuser,
       'tUser': thatUser,
       'callToken': extractedToken
@@ -54,13 +56,13 @@ class ChatsController extends GetxController {
           .toList();
     } else {
       // Filter and add users that match the search query
-      searchResults.value = allUsers;
+      searchResults.value = [];
     }
 
     update();
   }
 
-  void getAllUsers() async {
+  Future<void> getAllUsers() async {
     var data = await firebaseFirestore
         .collection('users')
         .where('uid', isNotEqualTo: currentuser.uid)
@@ -69,8 +71,7 @@ class ChatsController extends GetxController {
     data.docs.forEach(
       (element) {
         allUsers.add(element.data());
-
-        isLoaded(true);
+        print("${element.data()}");
       },
     );
     allUsers.forEach((element) async {
@@ -86,9 +87,17 @@ class ChatsController extends GetxController {
           .get()
           .then((value) {
         if (value.docs.isNotEmpty) {
+          isLoaded(true);
+
           allChatRooms.add(element);
+        } else {
+          isLoaded(true);
         }
       });
+      if (allChatRooms.isEmpty)
+        noChats(true);
+      else
+        noChats(false);
 
       // if (docRef.docs.length > 1) {
       //   print("Hello");

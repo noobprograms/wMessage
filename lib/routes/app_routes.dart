@@ -56,10 +56,10 @@ class AppRoutes {
       page: () => MediaPreview(),
       binding: MediaPreviewBinding(),
     ),
-    GetPage(
-      name: voiceCallScreen,
-      page: () => VoiceCalling(),
-      binding: VoiceCallBinding(),
-    ),
+    // GetPage(
+    //   name: voiceCallScreen,
+    //   page: () => VoiceCalling(),
+    //   binding: VoiceCallBinding(),
+    // ),
   ];
 }

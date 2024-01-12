@@ -83,6 +83,10 @@ class ChatService extends ChangeNotifier {
     }
   }
 
+  Future<void> ringOther(User sender, User receiver, String callToken) async {
+    sendCallNotif(sender, receiver, 'calling_from_other_device', callToken);
+  }
+
   static Stream<QuerySnapshot> getLastUserMessage(
       User thisUser, User otherUser) {
     List<String> ids = [thisUser.uid, otherUser.uid];
@@ -130,7 +134,35 @@ class ChatService extends ChangeNotifier {
               headers: {
                 'Content-Type': 'application/json',
                 'Authorization':
-                    'key=AAAAkN2I2hs:APA91bH8Ahb81K44mKUKBeUoEhJZJfSWjpyYkZxnaLTTyroMgw7fWpH-SEtWgGkIP-pbqL8dt1bo7TNGLtux3AUgMDzyW0hdQBsOJPK8A9uFBcrsftVMin6bAgotQJ_bYXmYtgoK_EA9'
+                    'key=AAAADn6YNMs:APA91bGrIqtbRGYmkLb-ORenVDtRD7qWc1dBc3mlv7-XjG8JfaOOIRRwUbJYPtQlFXN-3RPGkuOVuNY3GdEBBOd37gvUUygSTr-YwGhW81cqoheKhTRlbVjgRMJGPt0LJouEmF-1BVkv'
+              },
+              body: jsonEncode(body));
+      print(response.body);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  static Future<void> sendCallNotif(
+      User chatUser, User receiver, String message, String callToken) async {
+    print('the token value in chatservice${receiver.tokenValue!}');
+    try {
+      final body = {
+        "priority": 'high',
+        "to": receiver.tokenValue,
+        "notification": {
+          "title": chatUser.name,
+          "body": message,
+          "android_channel_id": "chats"
+        },
+        "data": {'callToken': callToken}
+      };
+      var response =
+          await post(Uri.parse('https://fcm.googleapis.com/fcm/send'),
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization':
+                    'key=AAAADn6YNMs:APA91bGrIqtbRGYmkLb-ORenVDtRD7qWc1dBc3mlv7-XjG8JfaOOIRRwUbJYPtQlFXN-3RPGkuOVuNY3GdEBBOd37gvUUygSTr-YwGhW81cqoheKhTRlbVjgRMJGPt0LJouEmF-1BVkv'
               },
               body: jsonEncode(body));
       print(response.body);

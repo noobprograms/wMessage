@@ -48,35 +48,27 @@ class SignUpScreen extends StatelessWidget {
               key: _formKey,
               child: Container(
                 width: double.maxFinite,
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20.h,
-                  vertical: 38.v,
+                padding: EdgeInsets.only(
+                  bottom: 20.h,
+                  right: 38.v,
+                  left: 38.v,
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CustomImageView(
-                      svgPath: ImageConstant.arrowImage,
-                      height: 18.v,
-                      width: 18.h,
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(left: 6.h),
-                      onTap: () {
-                        Get.back();
-                      },
-                    ),
                     Image.asset(
                       ImageConstant.logo,
                       height: mediaQueryData.size.height * 0.2,
-                      width: mediaQueryData.size.width * 0.5,
+                      width: mediaQueryData.size.width * 0.4,
                     ),
                     SizedBox(
-                      height: mediaQueryData.size.height * 0.023,
+                      height: mediaQueryData.size.height * 0.007,
                     ),
                     Text(
-                      'Sign Up',
+                      'Create Your Account',
                       style: TextStyle(
                           color: Colors.blue[900],
-                          fontSize: mediaQueryData.size.height * 0.05),
+                          fontSize: mediaQueryData.size.height * 0.03),
                     ),
                     SizedBox(height: 28.v),
                     CustomTextFormField(
@@ -89,7 +81,8 @@ class SignUpScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10)),
                       controller: controller.nameController,
                       hintText: "Name",
-                      textStyle: theme.textTheme.headlineLarge,
+                      textStyle: TextStyle(
+                          fontSize: mediaQueryData.size.height * 0.03),
                     ),
                     SizedBox(height: 19.v),
                     CustomTextFormField(
@@ -103,7 +96,8 @@ class SignUpScreen extends StatelessWidget {
                       controller: controller.emailController,
                       hintText: "Email",
                       textInputType: TextInputType.emailAddress,
-                      textStyle: theme.textTheme.headlineLarge,
+                      textStyle: TextStyle(
+                          fontSize: mediaQueryData.size.height * 0.03),
                     ),
                     SizedBox(height: 19.v),
                     CustomTextFormField(
@@ -123,7 +117,8 @@ class SignUpScreen extends StatelessWidget {
                         return null;
                       },
                       textInputType: TextInputType.phone,
-                      textStyle: theme.textTheme.headlineLarge,
+                      textStyle: TextStyle(
+                          fontSize: mediaQueryData.size.height * 0.03),
                     ),
                     SizedBox(height: 19.v),
                     CustomTextFormField(
@@ -144,7 +139,8 @@ class SignUpScreen extends StatelessWidget {
                       },
                       textInputType: TextInputType.visiblePassword,
                       obscureText: true,
-                      textStyle: theme.textTheme.headlineLarge,
+                      textStyle: TextStyle(
+                          fontSize: mediaQueryData.size.height * 0.03),
                     ),
                     SizedBox(height: 19.v),
                     CustomTextFormField(
@@ -160,7 +156,8 @@ class SignUpScreen extends StatelessWidget {
                       textInputAction: TextInputAction.done,
                       textInputType: TextInputType.visiblePassword,
                       obscureText: true,
-                      textStyle: theme.textTheme.headlineLarge,
+                      textStyle: TextStyle(
+                          fontSize: mediaQueryData.size.height * 0.03),
                     ),
                     SizedBox(height: 19.v),
                     ElevatedButton(
@@ -170,7 +167,7 @@ class SignUpScreen extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromARGB(255, 65, 74, 148),
                           fixedSize: Size(mediaQueryData.size.width * 0.83,
-                              mediaQueryData.size.height * 0.0625),
+                              mediaQueryData.size.height * 0.0525),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           )),
@@ -178,18 +175,18 @@ class SignUpScreen extends StatelessWidget {
                         'Create Account',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: mediaQueryData.size.height * 0.036,
+                          fontSize: mediaQueryData.size.height * 0.026,
                         ),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
                         left: 20.h,
-                        top: 20.v,
+                        top: 10.v,
                         right: 20.h,
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 13.v),
@@ -208,7 +205,7 @@ class SignUpScreen extends StatelessWidget {
                               bottom: 13.v,
                             ),
                             child: SizedBox(
-                              width: 147.h,
+                              width: 127.h,
                               child: Divider(
                                 indent: 13.h,
                               ),
@@ -217,7 +214,7 @@ class SignUpScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 17.v),
+                    SizedBox(height: 10.v),
                     ElevatedButton(
                       onPressed: () {
                         controller.googleSignIn();
@@ -225,7 +222,7 @@ class SignUpScreen extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromARGB(255, 166, 198, 253),
                           fixedSize: Size(mediaQueryData.size.width * 0.83,
-                              mediaQueryData.size.height * 0.0625),
+                              mediaQueryData.size.height * 0.0525),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           )),
@@ -236,21 +233,21 @@ class SignUpScreen extends StatelessWidget {
                             margin: EdgeInsets.only(right: 18.h),
                             child: Image.asset(
                               ImageConstant.googleLogo,
-                              height: mediaQueryData.size.height * 0.0425,
-                              width: mediaQueryData.size.width * 0.09,
+                              // height: mediaQueryData.size.height * 0.0325,
+                              width: mediaQueryData.size.width * 0.06,
                             ),
                           ),
                           Text(
                             'Login in with Google',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: mediaQueryData.size.height * 0.026,
+                              fontSize: mediaQueryData.size.height * 0.023,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(height: 37.v),
+                    SizedBox(height: 13.v),
                     RichText(
                       text: TextSpan(
                         children: [
@@ -258,7 +255,7 @@ class SignUpScreen extends StatelessWidget {
                             text: "Already have an account? ",
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: mediaQueryData.size.height * 0.026,
+                              fontSize: mediaQueryData.size.height * 0.023,
                             ),
                           ),
                           TextSpan(
@@ -269,7 +266,7 @@ class SignUpScreen extends StatelessWidget {
                             text: 'Sign In',
                             style: TextStyle(
                               color: Colors.blueAccent,
-                              fontSize: mediaQueryData.size.height * 0.026,
+                              fontSize: mediaQueryData.size.height * 0.023,
                             ),
                           ),
                         ],

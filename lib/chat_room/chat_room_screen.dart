@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nial_deliveries/chat_room/controller/chat_room_controller.dart';
 import 'package:nial_deliveries/core/utils/size_utils.dart';
+import 'package:nial_deliveries/core/utils/zego_appId.dart';
 import 'package:nial_deliveries/routes/app_routes.dart';
 import 'package:nial_deliveries/widgets/custom_text_form_field.dart';
 import 'package:nial_deliveries/widgets/message_bubble.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
 class ChatRoom extends StatelessWidget {
   ChatRoom({super.key});
@@ -60,17 +63,30 @@ class ChatRoom extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: IconButton(
-                onPressed: () {
-                  Get.offNamed(AppRoutes.voiceCallScreen, arguments: {
-                    'cUser': controller.currentUser,
-                    'callToken': controller.callToken
-                  });
-                },
-                icon: Icon(
-                  Icons.call,
-                  color: Colors.white,
-                )),
+            child:
+                // ZegoSendCallInvitationButton(
+                //   invitees: [
+                //     ZegoUIKitUser(
+                //         id: controller.thatUser.uid.substring(0, 4),
+                //         name: controller.thatUser.name)
+                //   ],
+                //   isVideoCall: false,
+                //   resourceID: 'nial_call',
+                // ),
+
+                IconButton(
+                    onPressed: () {
+                      // Get.offNamed(AppRoutes.voiceCallScreen, arguments: {
+                      //   'cUser': controller.currentUser,
+                      //   'callToken': controller.callToken
+                      // });
+
+                      controller.callOther(context);
+                    },
+                    icon: Icon(
+                      Icons.call,
+                      color: Colors.white,
+                    )),
           ),
         ],
       ),

@@ -5,9 +5,15 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:location/location.dart';
+import 'package:nial_deliveries/chat_room/middle_Screen.dart';
+import 'package:nial_deliveries/chat_room/newCallingScreen.dart';
+import 'package:nial_deliveries/chat_room/zego_voice_call.dart';
 import 'package:nial_deliveries/core/utils/chat_service%20copy.dart';
+import 'package:nial_deliveries/core/utils/zego_appId.dart';
 import 'package:nial_deliveries/routes/app_routes.dart';
-
+import 'package:uuid/uuid.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 import '../../core/models/user_model.dart';
 import '../../core/models/message_model.dart' as msg;
 
@@ -18,6 +24,10 @@ class ChatRoomController extends GetxController {
   final TextEditingController messageController = TextEditingController();
   final ChatService chatService = ChatService();
   Location location = Location();
+  @override
+  void onInit() async {
+    super.onInit();
+  }
 
   void sendMessage() async {
     if (messageController.text.isNotEmpty) {
@@ -25,6 +35,25 @@ class ChatRoomController extends GetxController {
           currentUser, thatUser, messageController.text, msg.Type.text, '');
       messageController.text = '';
     }
+  }
+
+  void callOther(BuildContext context) async {
+    await chatService.ringOther(currentUser, thatUser, callToken);
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => NewCallingScreen(callToken: callToken)));
+    // Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => NewCallingScreen(callToken: callToken)));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ZegoVoiceCall(
+                name: currentUser.name, id: currentUser.uid.substring(0, 4))));
+    // Get.offNamed(AppRoutes.voiceCallScreen,
+    //     arguments: {"callToken": callToken});
   }
 
   // void seeAccount(BuildContext context) {

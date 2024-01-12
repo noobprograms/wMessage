@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nial_deliveries/chats_screen/controller/chats_screen_controller.dart';
 import 'package:nial_deliveries/core/models/user_model.dart';
+import 'package:nial_deliveries/core/utils/auth_constants.dart';
 import 'package:nial_deliveries/core/utils/image_constant.dart';
 import 'package:nial_deliveries/core/utils/size_utils.dart';
 import 'package:nial_deliveries/googleauth/controller/auth_controller.dart';
@@ -22,14 +23,29 @@ class ChatScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text(
-            'Chats',
-            style: TextStyle(
-              fontSize: mediaQueryData.size.height * 0.047,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
+          title: Image.asset(
+            ImageConstant.cutLogo,
+            width: mediaQueryData.size.width * 0.1,
           ),
+          actions: [
+            InkWell(
+              onTap: () {
+                Get.put(AuthController());
+                authController.signOut();
+                ;
+              },
+              child: Text(
+                'Log Out',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(
+              width: mediaQueryData.size.width * 0.015,
+            ),
+          ],
           flexibleSpace: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
@@ -39,8 +55,8 @@ class ChatScreen extends StatelessWidget {
                 begin: Alignment.bottomLeft,
                 end: Alignment.topRight,
                 colors: [
+                  Color.fromARGB(255, 226, 224, 237),
                   Color.fromARGB(255, 92, 105, 205),
-                  Color.fromARGB(255, 62, 47, 128),
                 ],
               ),
             ),
@@ -70,34 +86,51 @@ class ChatScreen extends StatelessWidget {
               //   ],
               // ),
               Obx(() => controller.isLoaded.value
-                  ? Expanded(
-                      child: ListView.separated(
-                      itemCount: controller.allChatRooms.length,
-                      separatorBuilder: (context, index) => SizedBox(
-                        height: 10,
-                      ),
-                      itemBuilder: (context, index) {
-                        print(index);
-                        var instantUser = User(
-                          uid: controller.allChatRooms.value[index]['uid'],
-                          name: controller.allChatRooms.value[index]['name'],
-                          email: controller.allChatRooms.value[index]['email'],
-                          profileImageUrl: controller.allChatRooms.value[index]
-                              ['profileImageUrl'],
-                          tokenValue: controller.allChatRooms.value[index]
-                              ['tokenValue'],
-                          phoneNumber: controller.allChatRooms.value[index]
-                              ['phoneNumber'],
-                        );
-                        return GestureDetector(
-                          onTap: () {
-                            controller.goToChatRoom(instantUser);
+                  ? controller.noChats.value
+                      ? Expanded(
+                          child: Center(
+                              child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'No chats to display. Press the button below to start chatting',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: mediaQueryData.size.width * 0.05,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          )),
+                        )
+                      : Expanded(
+                          child: ListView.separated(
+                          itemCount: controller.allChatRooms.length,
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 10,
+                          ),
+                          itemBuilder: (context, index) {
+                            print(index);
+                            var instantUser = User(
+                              uid: controller.allChatRooms.value[index]['uid'],
+                              name: controller.allChatRooms.value[index]
+                                  ['name'],
+                              email: controller.allChatRooms.value[index]
+                                  ['email'],
+                              profileImageUrl: controller
+                                  .allChatRooms.value[index]['profileImageUrl'],
+                              tokenValue: controller.allChatRooms.value[index]
+                                  ['tokenValue'],
+                              phoneNumber: controller.allChatRooms.value[index]
+                                  ['phoneNumber'],
+                            );
+                            return GestureDetector(
+                              onTap: () {
+                                controller.goToChatRoom(instantUser);
+                              },
+                              child: ChatInfoTile(
+                                  instantUser, controller.currentuser),
+                            );
                           },
-                          child:
-                              ChatInfoTile(instantUser, controller.currentuser),
-                        );
-                      },
-                    ))
+                        ))
                   : Expanded(
                       child: Center(
                       child: CircularProgressIndicator(

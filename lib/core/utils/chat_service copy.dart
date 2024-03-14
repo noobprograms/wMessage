@@ -134,7 +134,7 @@ class ChatService extends ChangeNotifier {
               headers: {
                 'Content-Type': 'application/json',
                 'Authorization':
-                    'key=AAAADn6YNMs:APA91bGrIqtbRGYmkLb-ORenVDtRD7qWc1dBc3mlv7-XjG8JfaOOIRRwUbJYPtQlFXN-3RPGkuOVuNY3GdEBBOd37gvUUygSTr-YwGhW81cqoheKhTRlbVjgRMJGPt0LJouEmF-1BVkv'
+                    'key=your_fcm_key'
               },
               body: jsonEncode(body));
       print(response.body);
@@ -162,7 +162,7 @@ class ChatService extends ChangeNotifier {
               headers: {
                 'Content-Type': 'application/json',
                 'Authorization':
-                    'key=AAAADn6YNMs:APA91bGrIqtbRGYmkLb-ORenVDtRD7qWc1dBc3mlv7-XjG8JfaOOIRRwUbJYPtQlFXN-3RPGkuOVuNY3GdEBBOd37gvUUygSTr-YwGhW81cqoheKhTRlbVjgRMJGPt0LJouEmF-1BVkv'
+                    'key=your_fcm_key'
               },
               body: jsonEncode(body));
       print(response.body);
